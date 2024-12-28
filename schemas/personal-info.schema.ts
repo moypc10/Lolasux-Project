@@ -1,13 +1,16 @@
 import { z } from "zod";
 
 export const PersonalInfoSchema = z.object({
-  fullName: z.string(),  // What's a reasonable minimum length for a full name?
-  email: z.string().email(),
+  fullName: z.string().max(100).min(1, { message: "Full Name is required" }),
+  email: z.string().email().max(100),
   phone: z.string()
-    // Should we allow international phone numbers? What format makes sense?
-    .regex(/^\+?[1-9]\d{1,14}$/),
-  location: z.string(),  // Should this be free text or structured (city, country)?
-  portfolioUrl: z.string().url().optional(),
+    .regex(/^\+?[1-9]\d{1,15}$/)
+    .min(12, { message: "Phone number must be at least 12 digits long" })
+    .max(16,{message: "Phone number must be maximun 16 digits long"})
+    .refine((val) => val.startsWith('+'),{
+      message: "Phone number must start with '+'",}),
+  location: z.string().min(1, { message: "Location is required" }),
+  portfolioUrl: z.string().url().optional().or(z.string().max(0))
 });
 
 export type PersonalInfo = z.infer<typeof PersonalInfoSchema>;
