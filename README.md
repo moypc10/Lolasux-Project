@@ -45,3 +45,6 @@ Este proyecto fue desarrollado utilizando las siguientes tecnologías:
 
 5. **Estilizado**
    - Se utilizó Tailwind CSS para el diseño y estilizado de todo el proyecto.
+  
+6. **Persistencia**
+   - Se agregó persistencia usando local Storage en el proyecto
